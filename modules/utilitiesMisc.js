@@ -132,7 +132,10 @@ async function findEndDateToQueryParameters(queryParameters) {
 
 function runSemanticScorerViaPm2() {
   exec(
-    "pm2 start NewsNexusSemanticScorer02 --node-args='--runScorer'",
+    "pm2 restart NewsNexusSemanticScorer02 --update-env",
+    {
+      env: { ...process.env, RUN_SCORER: "true" },
+    },
     (error, stdout, stderr) => {
       if (error) {
         console.error(`❌ Failed to start scorer: ${error.message}`);
