@@ -6,7 +6,7 @@ const {
 const {
   createArraysOfParametersNeverRequestedAndRequested,
   findEndDateToQueryParameters,
-  runSemanticScorerViaPm2,
+  runSemanticScorer,
 } = require("./modules/utilitiesMisc");
 const { requester } = require("./modules/requestsNewsDataIoApi");
 
@@ -134,7 +134,7 @@ async function main() {
   }
 
   if (indexMaster === 2) {
-    runSemanticScorerViaPm2();
+    runSemanticScorer();
   }
 }
 

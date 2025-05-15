@@ -12,7 +12,7 @@ const {
 } = require("./utilitiesReadAndMakeFiles");
 const {
   checkRequestAndModifyDates,
-  runSemanticScorerViaPm2,
+  runSemanticScorer,
 } = require("./utilitiesMisc");
 
 async function requester(currentParams, indexMaster) {
@@ -285,8 +285,7 @@ async function makeNewsDataIoRequest(
         console.log(
           `--> ⛔ Ending process: rate limited by ${process.env.NAME_OF_ORG_REQUESTING_FROM}`
         );
-        // runSemanticScorer();
-        runSemanticScorerViaPm2();
+        runSemanticScorer();
         process.exit(1);
       }
     }

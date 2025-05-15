@@ -130,30 +130,45 @@ async function findEndDateToQueryParameters(queryParameters) {
   }
 }
 
-function runSemanticScorerViaPm2() {
-  exec(
-    "pm2 restart NewsNexusSemanticScorer02 --update-env",
+function runSemanticScorer() {
+  const scorerProcess = spawn(
+    "node",
+    ["/Users/nick/Documents/NewsNexusSemanticScorer02/index.js"],
     {
-      env: { ...process.env, RUN_SCORER: "true" },
-    },
-    (error, stdout, stderr) => {
-      if (error) {
-        console.error(`❌ Failed to start scorer: ${error.message}`);
-        return;
-      }
-      if (stderr) {
-        console.warn(`⚠️ Scorer stderr: ${stderr}`);
-      }
-      console.log(
-        `✅ NewsNexusSemanticScorer02 started via pm2 with --runScorer`
-      );
+      stdio: "inherit", // show output in same terminal
+      detached: true, // critical: lets the process run independently
     }
   );
+
+  scorerProcess.unref(); // this fully detaches it so the parent can exit
+  console.log("✅ NewsNexusSemanticScorer02 has been triggered.");
 }
+
+// function runSemanticScorerViaPm2() {
+//   exec(
+//     "pm2 restart NewsNexusSemanticScorer02 --update-env",
+//     {
+//       env: { ...process.env, RUN_SCORER: "true" },
+//     },
+//     (error, stdout, stderr) => {
+//       if (error) {
+//         console.error(`❌ Failed to start scorer: ${error.message}`);
+//         return;
+//       }
+//       if (stderr) {
+//         console.warn(`⚠️ Scorer stderr: ${stderr}`);
+//       }
+//       console.log(
+//         `✅ NewsNexusSemanticScorer02 started via pm2 with --runScorer`
+//       );
+//     }
+//   );
+// }
 
 module.exports = {
   createArraysOfParametersNeverRequestedAndRequested,
   checkRequestAndModifyDates,
   findEndDateToQueryParameters,
-  runSemanticScorerViaPm2,
+  // runSemanticScorerViaPm2,
+  runSemanticScorer,
 };
