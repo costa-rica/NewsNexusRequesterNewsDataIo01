@@ -109,6 +109,7 @@ async function main() {
 
     if (indexMaster === limit) {
       console.log(`--- [End process] Went through ${limit} requests ---`);
+      runSemanticScorer();
       break;
     }
 
@@ -132,10 +133,7 @@ async function main() {
       index = 0;
     }
   }
-
-  if (indexMaster === 2) {
-    runSemanticScorer();
-  }
+  console.log("--- [End process] main and outside the while(true) loop ---");
 }
 
 function sleep(ms) {
