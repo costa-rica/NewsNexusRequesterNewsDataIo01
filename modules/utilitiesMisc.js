@@ -2,7 +2,7 @@ const {
   NewsApiRequest,
   NewsArticleAggregatorSource,
 } = require("newsnexus07db");
-const { exec } = require("child_process");
+const { spawn } = require("child_process");
 
 async function createArraysOfParametersNeverRequestedAndRequested(
   queryObjects
