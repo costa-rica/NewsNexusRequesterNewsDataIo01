@@ -2,6 +2,7 @@ const {
   NewsApiRequest,
   NewsArticleAggregatorSource,
 } = require("newsnexus07db");
+const { spawn } = require("child_process");
 
 async function createArraysOfParametersNeverRequestedAndRequested(
   queryObjects
@@ -129,8 +130,27 @@ async function findEndDateToQueryParameters(queryParameters) {
   }
 }
 
+function runSemanticScorerViaPm2() {
+  exec(
+    "pm2 start NewsNexusSemanticScorer02 --node-args='--runScorer'",
+    (error, stdout, stderr) => {
+      if (error) {
+        console.error(`❌ Failed to start scorer: ${error.message}`);
+        return;
+      }
+      if (stderr) {
+        console.warn(`⚠️ Scorer stderr: ${stderr}`);
+      }
+      console.log(
+        `✅ NewsNexusSemanticScorer02 started via pm2 with --runScorer`
+      );
+    }
+  );
+}
+
 module.exports = {
   createArraysOfParametersNeverRequestedAndRequested,
   checkRequestAndModifyDates,
   findEndDateToQueryParameters,
+  runSemanticScorerViaPm2,
 };

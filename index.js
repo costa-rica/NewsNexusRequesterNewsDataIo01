@@ -6,6 +6,7 @@ const {
 const {
   createArraysOfParametersNeverRequestedAndRequested,
   findEndDateToQueryParameters,
+  runSemanticScorerViaPm2,
 } = require("./modules/utilitiesMisc");
 const { requester } = require("./modules/requestsNewsDataIoApi");
 
@@ -72,7 +73,8 @@ async function main() {
 
   // console.log(arrayOfPrioritizedParameters);
 
-  while (true) {
+  // while (true) {
+  while (indexMaster < 2) {
     const currentParams = arrayOfPrioritizedParameters[index];
     if (!currentParams.dateEndOfRequest) {
       console.log(
@@ -129,6 +131,10 @@ async function main() {
       );
       index = 0;
     }
+  }
+
+  if (indexMaster === 2) {
+    runSemanticScorerViaPm2();
   }
 }
 

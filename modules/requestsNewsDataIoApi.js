@@ -10,7 +10,10 @@ const {
 const {
   writeResponseDataFromNewsAggregator,
 } = require("./utilitiesReadAndMakeFiles");
-const { checkRequestAndModifyDates } = require("./utilitiesMisc");
+const {
+  checkRequestAndModifyDates,
+  runSemanticScorerViaPm2,
+} = require("./utilitiesMisc");
 
 async function requester(currentParams, indexMaster) {
   // Step 1: prepare paramters
@@ -282,6 +285,8 @@ async function makeNewsDataIoRequest(
         console.log(
           `--> ⛔ Ending process: rate limited by ${process.env.NAME_OF_ORG_REQUESTING_FROM}`
         );
+        // runSemanticScorer();
+        runSemanticScorerViaPm2();
         process.exit(1);
       }
     }
