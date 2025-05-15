@@ -133,7 +133,7 @@ async function findEndDateToQueryParameters(queryParameters) {
 function runSemanticScorer() {
   const scorerProcess = spawn(
     "node",
-    ["/Users/nick/Documents/NewsNexusSemanticScorer02/index.js"],
+    process.env.PATH_AND_FILENAME_FOR_SEMANTIC_SCORER,
     {
       stdio: "inherit", // show output in same terminal
       detached: true, // critical: lets the process run independently
