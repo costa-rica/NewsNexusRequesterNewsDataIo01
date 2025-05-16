@@ -134,8 +134,8 @@ async function main() {
     }
   }
   console.log("--- [End process] main and outside the while(true) loop ---");
-  // For Testing
-  runSemanticScorer();
+  // // For Testing - use for ending process early wiht limit, otherwise this will already run based on other conditions
+  // runSemanticScorer();
 }
 
 function sleep(ms) {
