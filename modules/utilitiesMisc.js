@@ -2,7 +2,7 @@ const {
   NewsApiRequest,
   NewsArticleAggregatorSource,
 } = require("newsnexus07db");
-const { spawn } = require("child_process");
+const { exec } = require("child_process");
 
 async function createArraysOfParametersNeverRequestedAndRequested(
   queryObjects
@@ -131,16 +131,22 @@ async function findEndDateToQueryParameters(queryParameters) {
 }
 
 function runSemanticScorer() {
-  const scorerProcess = spawn(
-    "node",
-    process.env.PATH_AND_FILENAME_FOR_SEMANTIC_SCORER,
-    {
-      stdio: "inherit", // show output in same terminal
-      detached: true, // critical: lets the process run independently
+  console.log(
+    `Starting child process: ${process.env.PATH_AND_FILENAME_TO_SEMANTIC_SCORER}`
+  );
+  exec(
+    `node "${process.env.PATH_AND_FILENAME_TO_SEMANTIC_SCORER}"`,
+    (error, stdout, stderr) => {
+      if (error) {
+        console.error(`Error executing child process: ${error.message}`);
+        return;
+      }
+      if (stderr) {
+        console.error(`Child process stderr: ${stderr}`);
+      }
+      console.log(`Child process stdout:\n${stdout}`);
     }
   );
-
-  scorerProcess.unref(); // this fully detaches it so the parent can exit
   console.log("✅ NewsNexusSemanticScorer02 has been triggered.");
 }
 

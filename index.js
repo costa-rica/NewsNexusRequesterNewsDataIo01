@@ -73,8 +73,8 @@ async function main() {
 
   // console.log(arrayOfPrioritizedParameters);
 
-  // while (true) {
-  while (indexMaster < 2) {
+  while (true) {
+    // while (indexMaster < 2) {
     const currentParams = arrayOfPrioritizedParameters[index];
     if (!currentParams.dateEndOfRequest) {
       console.log(
@@ -134,6 +134,8 @@ async function main() {
     }
   }
   console.log("--- [End process] main and outside the while(true) loop ---");
+  // For Testing
+  runSemanticScorer();
 }
 
 function sleep(ms) {
