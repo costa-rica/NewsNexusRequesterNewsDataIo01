@@ -109,7 +109,7 @@ async function main() {
 
     if (indexMaster === limit) {
       console.log(`--- [End process] Went through ${limit} requests ---`);
-      runSemanticScorer();
+      await runSemanticScorer();
       break;
     }
 

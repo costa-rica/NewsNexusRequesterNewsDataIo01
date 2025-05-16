@@ -285,8 +285,8 @@ async function makeNewsDataIoRequest(
         console.log(
           `--> ⛔ Ending process: rate limited by ${process.env.NAME_OF_ORG_REQUESTING_FROM}`
         );
-        runSemanticScorer();
-        process.exit(1);
+        await runSemanticScorer();
+        // process.exit(1);
       }
     }
     // Step 4: create new NewsApiRequest

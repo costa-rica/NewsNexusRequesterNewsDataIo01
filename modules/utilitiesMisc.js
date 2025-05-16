@@ -130,24 +130,38 @@ async function findEndDateToQueryParameters(queryParameters) {
   }
 }
 
-function runSemanticScorer() {
+async function runSemanticScorer() {
   console.log(
     `Starting child process: ${process.env.PATH_AND_FILENAME_TO_SEMANTIC_SCORER}`
   );
-  exec(
-    `node "${process.env.PATH_AND_FILENAME_TO_SEMANTIC_SCORER}"`,
-    (error, stdout, stderr) => {
-      if (error) {
-        console.error(`Error executing child process: ${error.message}`);
-        return;
+  return new Promise((resolve, reject) => {
+    exec(
+      `node "${process.env.PATH_AND_FILENAME_TO_SEMANTIC_SCORER}"`,
+      (error, stdout, stderr) => {
+        if (error) {
+          console.error(`Error executing child process: ${error.message}`);
+          return reject(error);
+        }
+        if (stderr) {
+          console.error(`Child process stderr: ${stderr}`);
+        }
+        console.log(`Child process finished`);
+        resolve(stdout);
       }
-      if (stderr) {
-        console.error(`Child process stderr: ${stderr}`);
-      }
-      console.log(`Child process stdout:\n${stdout}`);
-    }
-  );
-  console.log("✅ NewsNexusSemanticScorer02 has been triggered.");
+    );
+  })
+    .then(() => {
+      console.log(
+        " [NewsNexusRequesterNewsDataIo01] ✅ NewsNexusSemanticScorer02 has finished."
+      );
+      process.exit();
+    })
+    .catch(() => {
+      console.log(
+        " [NewsNexusRequesterNewsDataIo01] ❌ NewsNexusSemanticScorer02 has finished with error."
+      );
+      process.exit(1);
+    });
 }
 
 // function runSemanticScorerViaPm2() {
